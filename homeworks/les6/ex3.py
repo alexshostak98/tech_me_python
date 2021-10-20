@@ -18,8 +18,7 @@ def is_alpha(string):
 
 
 def check_palindrome(func, string):
-    result = True
-    return result if func(string) == func(string[::-1]) else not result
+    return func(string) == func(string[::-1])
 
 
 print(check_palindrome(is_alpha, input_palindrome))
