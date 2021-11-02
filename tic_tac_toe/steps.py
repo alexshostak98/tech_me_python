@@ -6,11 +6,13 @@ from interface import user_interface
 
 def get_step() -> tuple:
     result = []
-    input_step = input("Введите координаты хода через пробел\n")
-    steps = input_step.split(" ")
+    steps = user_interface('enter_step').split(" ")
     for itm in steps:
-        if itm.isdigit():
+        try:
             result.append(int(itm))
+        except ValueError:
+            result.append(itm)
+            break
     return tuple(result)
 
 
@@ -32,7 +34,7 @@ def user_step(user: dict, board: list) -> tuple:
             board[step[0]][step[1]] = user["symbol"]
             return step
         else:
-            user_interface('wrong_step')
+            print(user_interface('wrong_step'))
             continue
 
 

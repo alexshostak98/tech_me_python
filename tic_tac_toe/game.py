@@ -3,33 +3,33 @@ from datetime import datetime
 
 from board import get_board, board_match, print_board
 from steps import user_step
-from users import ask_mode, create_users
+from users import ask_mode, init_users
 from interface import user_interface
+from constants import RESTART_GAME
 from logs import logging
 
 
 def game_init(board_size: int) -> dict:
-    user_interface("hello")
+    print(user_interface("hello"))
     logging('start_time', start_time=datetime.now())
     return {
-        "users": create_users(ask_mode()),
+        "users": init_users(ask_mode()),
         "board": get_board(board_size),
     }
 
 
 def game_end(step_num: int, winner: dict) -> bool:
     if winner:
-        user_interface('win', step_num=step_num, user=winner["name"])
+        print(user_interface('win', step_num=step_num, user=winner["name"]))
         logging('win', step_num=step_num, user=winner["name"])
     else:
-        user_interface('draw', step_num=step_num)
+        print(user_interface('draw', step_num=step_num))
         logging('draw', step_num=step_num)
-    variants = ("Y", "N")
     while True:
-        user_input = input(f"Реванш? {'/'.join(variants)}").upper()
-        if user_input in variants:
-            return user_input == variants[0]
-        print("Неверный ввод, повторите")
+        user_input = user_interface('new_game', variants='/'.join(RESTART_GAME)).upper()
+        if user_input in RESTART_GAME:
+            return user_input == RESTART_GAME[0]
+        print(user_interface('wrong_choice'))
 
 
 def game_cycle(users: list, board: list) -> (int, dict):
@@ -38,7 +38,7 @@ def game_cycle(users: list, board: list) -> (int, dict):
     steps = set()
     for step_num, user in enumerate(cycle(users), 1):
         user["all_steps"] = steps
-        user_interface('ask_step', step_num=step_num, user=user['name'])
+        print(user_interface('ask_step', step_num=step_num, user=user['name']))
         logging('steps', step_num=step_num, user=user['name'], step_time=datetime.time(datetime.now()))
         if step_num == 1:
             print_board(board)

@@ -9,6 +9,10 @@ COMP_NAMES = [
 
 BOARD_SIZE = 3
 
+RESTART_GAME = ('Y', 'N')
+
+MODES = ('COMP', 'USER')
+
 ALL_STEPS_VARIANTS = set((i, j) for i in range(BOARD_SIZE) for j in range(BOARD_SIZE))
 
 LOGS_FILE_NAME = 'logs_file'

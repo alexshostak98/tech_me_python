@@ -1,60 +1,42 @@
-import random
-
-from constants import COMP_NAMES, SYMBOLS
+from constants import SYMBOLS, MODES
 from templates import user_template
+from interface import user_interface
 from logs import logging
 
 
-def create_user(symbol: str) -> dict:
+def create_users(symbol: str, mode: str) -> dict:
     user = {}
     for itm in user_template:
-        user[itm[0]] = itm[1](symbol=symbol, user_type="USER")
+        user[itm[0]] = itm[1](symbol=symbol, user_type=mode)
     return user
 
 
-def create_comp(symbol: str) -> dict:
-    return {
-        "name": random.choice(COMP_NAMES),
-        "symbol": symbol,
-        "steps": [],
-        "all_steps": set(),
-        "user_type": "COMP",
-    }
-
-
-MODES = {
-    "COMP": {"creator": create_comp},
-    "USER": {"creator": create_user},
-}
-
-
 def get_user(mode: str, symbol: str) -> dict:
-    return MODES[mode]["creator"](symbol=symbol)
+    user = create_users(symbol=symbol, mode=mode)
+    return user
 
 
 def ask_mode() -> str:
     user_modes = {idx: itm for idx, itm in enumerate(MODES, 1)}
 
     modes_str = "\n".join(f"{key}: {value}" for key, value in user_modes.items())
-    modes_string = f"Выберите номер режима игры\n{modes_str}"
+    modes_string = user_interface('game_mode', variants=modes_str)
 
     while True:
         try:
-            mode_input = int(input(modes_string))
+            mode_input = int(modes_string)
             mode = user_modes[mode_input]
             logging('game_mode', game_mode=mode)
             return mode
-        except ValueError:
-            print("Недопустимый ввод, введите только число")
-        except KeyError:
-            print("Недопустимое значение, повторите ввод")
+        except (ValueError, KeyError):
+            print(user_interface('wrong_choice'))
         continue
 
 
-def create_users(mode: str) -> list:
+def init_users(mode: str) -> list:
     users = []
     for symbol, mode in zip(SYMBOLS, ("USER", mode)):
         user = get_user(mode, symbol)
         users.append(user)
-    logging('begin_user', begin_user=users[0]['name'])
+        logging('user', user=user['name'])
     return users
