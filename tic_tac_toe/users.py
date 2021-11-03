@@ -1,12 +1,19 @@
+import sys
+
 from constants import SYMBOLS, MODES
 from templates import user_template
 from interface import user_interface
-from logs import logging
 
 
 def create_users(symbol: str, mode: str) -> dict:
     user = {}
     for itm in user_template:
+        try:
+            if itm[0] == 'name':
+                user[itm[0]] = (sys.argv[2] if symbol == 'X' else sys.argv[3])
+                continue
+        except IndexError:
+            pass
         user[itm[0]] = itm[1](symbol=symbol, user_type=mode)
     return user
 
@@ -26,10 +33,9 @@ def ask_mode() -> str:
         try:
             mode_input = int(modes_string)
             mode = user_modes[mode_input]
-            logging('game_mode', game_mode=mode)
             return mode
         except (ValueError, KeyError):
-            print(user_interface('wrong_choice'))
+            print(user_interface('choice_error'))
         continue
 
 
@@ -38,5 +44,4 @@ def init_users(mode: str) -> list:
     for symbol, mode in zip(SYMBOLS, ("USER", mode)):
         user = get_user(mode, symbol)
         users.append(user)
-        logging('user', user=user['name'])
     return users

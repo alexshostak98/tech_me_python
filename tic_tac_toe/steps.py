@@ -34,7 +34,7 @@ def user_step(user: dict, board: list) -> tuple:
             board[step[0]][step[1]] = user["symbol"]
             return step
         else:
-            print(user_interface('wrong_step'))
+            print(user_interface('step_error'))
             continue
 
 

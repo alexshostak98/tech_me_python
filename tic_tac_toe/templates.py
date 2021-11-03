@@ -1,13 +1,9 @@
 from random import choice
 
-from constants import COMP_NAMES
+from constants import COMP_NAMES, GAME_RULES
 
 interface_string = {
-    "rules": """Игроки по очереди ставят на свободные клетки поля 3×3 знаки 
-    (один всегда крестики, другой всегда нолики). 
-    Первый, выстроивший в ряд 3 своих фигуры по вертикали, горизонтали или диагонали, выигрывает.
-    Если ни одному из игроков не удалось выстроить 3 свои фигуры в ряд, объявляется ничья. 
-    Первый ход делает игрок, ставящий крестики.""",
+    "help": GAME_RULES,
     "hello": "Добро пожаловать в Игру Крестики Нолики",
     "game_mode": "Выберите режим игры\n{variants}\n>>",
     "enter_name": "Введите Ваше имя\n>>",
@@ -16,20 +12,19 @@ interface_string = {
     "win": "На #{step_num} ходу победил игрок {user}",
     "draw": "На {step_num} ходу произошла ничья",
     "new_game": "Сыграем еще раз? {variants}\n>>",
-    "wrong_step": """Ход выполнен не корректно, убедитесь, что:
+    "step_error": """Ход выполнен не корректно, убедитесь, что:
     - введены две координаты;
     - координаты являются целыми числами от 0 до 2;
     - координаты не вводились ранее.""",
-    "wrong_choice": "Некорректный ввод. Попробуйте снова",
+    "choice_error": "Некорректный ввод. Попробуйте снова",
+    "log_error": "Ошибка чтения лога",
 }
 
 log_string = {
-    'start_time': '\nНачало игры: {start_time}\n',
-    'game_mode': 'Режим игры: {game_mode}\n',
-    'user': 'Игрок: {user}\n',
-    'steps': 'Ход {step_num} игрока {user} совершен в {step_time}\n',
-    'win': 'На {step_num} ходу победил игрок {user}\n',
-    'draw': 'На {step_num} ходу произошла ничья\n',
+    'game_init': '{}#{}#{mode}#{user1}#{user2}\n',
+    'steps': '{}#{}#{user}#{step}#{step_num}\n',
+    'win': '{}#{}#Победитель-{user}#{step_num}\n',
+    'draw': '{}#{}#Ничья#{step_num}\n',
 }
 
 input_template_variants = {
@@ -46,12 +41,10 @@ template_variants = {
 }
 
 log_templates = {
-    'start_time': lambda template, **kwargs: template.format(**kwargs),
-    'game_mode': lambda template, **kwargs: template.format(**kwargs),
-    'user': lambda template, **kwargs: template.format(**kwargs),
-    'steps': lambda template, **kwargs: template.format(**kwargs),
-    'win': lambda template, **kwargs: template.format(**kwargs),
-    'draw': lambda template, **kwargs: template.format(**kwargs),
+    'game_init': lambda template, *args, **kwargs: template.format(*args, **kwargs),
+    'steps': lambda template, *args, **kwargs: template.format(*args, **kwargs),
+    'win': lambda template, *args, **kwargs: template.format(*args, **kwargs),
+    'draw': lambda template, *args, **kwargs: template.format(*args, **kwargs),
 }
 
 user_template = (
