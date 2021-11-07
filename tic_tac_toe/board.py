@@ -22,7 +22,7 @@ def board_match(board: list) -> bool:
 
 
 def step_match(board: list) -> tuple:
-    def check_lines(lines, l_type) -> (tuple, bool):
+    def check_lines(lines, l_type) -> tuple:
         for idx, item in enumerate(lines):
             if (item.count("X") == 2 or item.count("O") == 2) and 0 in item:
                 idx2 = item.index(0)
@@ -33,14 +33,14 @@ def step_match(board: list) -> tuple:
                     "inv_diag": (idx2, len(item) - idx2 - 1)
                 }
                 return steps[l_type]
-        return False
+        return tuple()
 
     diagonals = get_diagonals(board)
     line_list = [[board, "row"], [zip(*board), "column"], [[diagonals[0]], "diag"], [[diagonals[1]], "inv_diag"]]
     for line, line_type in line_list:
         result = check_lines(line, line_type)
         if result:
-            return tuple(result)
+            return result
 
 
 def print_board(board: list) -> None:
