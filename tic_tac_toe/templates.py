@@ -21,10 +21,10 @@ interface_string = {
 }
 
 log_string = {
-    'game_init': '{}#{}#{mode}#{user1}#{user2}\n',
-    'steps': '{}#{}#{user}#{step}#{step_num}\n',
-    'win': '{}#{}#Победитель-{user}#{step_num}\n',
-    'draw': '{}#{}#Ничья#{step_num}\n',
+    "game_init": "{}#{}#{mode}#{user1}#{user2}\n",
+    "steps": "{}#{}#{user}#{step}#{step_num}\n",
+    "win": "{}#{}#Победитель-{user}#{step_num}\n",
+    "draw": "{}#{}#Ничья#{step_num}\n",
 }
 
 input_template_variants = {
@@ -40,15 +40,16 @@ template_variants = {
     "draw": lambda template, **kwargs: template.format(**kwargs),
 }
 
-log_templates = {
-    'game_init': lambda template, *args, **kwargs: template.format(*args, **kwargs),
-    'steps': lambda template, *args, **kwargs: template.format(*args, **kwargs),
-    'win': lambda template, *args, **kwargs: template.format(*args, **kwargs),
-    'draw': lambda template, *args, **kwargs: template.format(*args, **kwargs),
+log_template = {
+    "game_init": lambda template, *args, **kwargs: template.format(*args, **kwargs),
+    "steps": lambda template, *args, **kwargs: template.format(*args, **kwargs),
+    "win": lambda template, *args, **kwargs: template.format(*args, **kwargs),
+    "draw": lambda template, *args, **kwargs: template.format(*args, **kwargs),
 }
 
 user_template = (
-    ("name", lambda user_type, *args, **kwargs: input(interface_string['enter_name']) if user_type == 'USER' else choice(COMP_NAMES)),
+    ("name", lambda user_type, *args, **kwargs: input(
+        interface_string["enter_name"]) if user_type == "USER" else choice(COMP_NAMES)),
     ("symbol", lambda symbol, *args, **kwargs: symbol),
     ("steps", lambda *args, **kwargs: list()),
     ("all_steps", lambda *args, **kwargs: set()),
