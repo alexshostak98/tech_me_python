@@ -14,12 +14,14 @@ def get_game_num() -> int:
             data = int(data) + inc
         write_to_file("game_num", str(data), "w")
         return data
+    except ValueError:
+        write_to_file("game_num", str(inc), "w")
     except FileNotFoundError:
         os.mkdir(LOGS_DIR_NAME)
         write_to_file("game_num", str(inc), "w")
-        return inc
     except IOError:
         print(user_interface("log_error"))
+    return inc
 
 
 def write_to_file(name: str, message: str, access_type="a"):

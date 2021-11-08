@@ -2,12 +2,12 @@ import os
 
 SYMBOLS = ("X", "O")
 
-COMP_NAMES = [
+COMP_NAMES = (
     "R2D2",
     "C3PO",
     "WALLE",
     "DALEK",
-]
+)
 
 GAME_RULES = """Аргументы игры:
 Системные:

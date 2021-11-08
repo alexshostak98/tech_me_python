@@ -1,11 +1,13 @@
-def get_board(size: int) -> list:
-    return [[0 for _ in range(size)] for _ in range(size)]
+from constants import BOARD_SIZE
+
+
+def get_board() -> list:
+    return [[0 for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
 
 
 def get_diagonals(board: list) -> tuple:
-    board_len = len(board)
-    diagonal = tuple(map(lambda idx: board[idx][idx], range(board_len)))
-    diagonal_invert = tuple(map(lambda idx: board[idx][board_len - idx - 1], range(board_len)))
+    diagonal = tuple(map(lambda idx: board[idx][idx], range(BOARD_SIZE)))
+    diagonal_invert = tuple(map(lambda idx: board[idx][BOARD_SIZE - idx - 1], range(BOARD_SIZE)))
     return diagonal, diagonal_invert
 
 

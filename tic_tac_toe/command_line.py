@@ -4,7 +4,7 @@ from constants import MODES
 from interface import user_interface
 
 
-def command_line_help():
+def command_line_help() -> None:
     try:
         if sys.argv[1] == "help":
             print(user_interface("help"))
@@ -13,19 +13,19 @@ def command_line_help():
         pass
 
 
-def command_line_mode():
+def command_line_mode() -> str:
     try:
-        argv_mode = sys.argv[1]
-        if argv_mode.upper() in MODES:
-            return argv_mode.upper()
+        argv_mode = sys.argv[1].upper()
+        if argv_mode in MODES:
+            return argv_mode
         else:
-            raise IndexError
+            return ''
     except IndexError:
         pass
 
 
-def command_line_users():
+def command_line_users() -> list:
     try:
         return sys.argv[2:]
     except IndexError:
-        pass
+        return []

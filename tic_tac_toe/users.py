@@ -17,12 +17,11 @@ def create_users(symbol: str, mode: str) -> dict:
 
 def ask_mode() -> str:
     user_modes = {idx: itm for idx, itm in enumerate(MODES, 1)}
-
     modes_str = "\n".join(f"{key}: {value}" for key, value in user_modes.items())
-    modes_string = user_interface("game_mode", variants=modes_str)
 
     while True:
         try:
+            modes_string = user_interface("game_mode", variants=modes_str)
             mode_input = int(modes_string)
             mode = user_modes[mode_input]
             return mode

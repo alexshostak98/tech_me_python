@@ -5,11 +5,11 @@ from board import get_board, board_match, print_board
 from steps import user_step
 from users import get_users, ask_mode
 from interface import user_interface
-from constants import RESTART_GAME
+from constants import RESTART_GAME, BOARD_SIZE
 from logs import init_log_message, write_to_file, get_game_num
 
 
-def game_init(board_size: int) -> dict:
+def game_init() -> dict:
     print(user_interface("hello"))
     command = command_line_mode()
     mode = command if command else ask_mode()
@@ -19,7 +19,7 @@ def game_init(board_size: int) -> dict:
     write_to_file("game_init", log_message)
     return {
         "users": users,
-        "board": get_board(board_size),
+        "board": get_board(),
         "game_num": game_num
     }
 
@@ -58,6 +58,6 @@ def game_cycle(users: list, board: list, game_num: int) -> (int, dict, int):
         if board_match(board):
             winner = user
             break
-        if step_num > 8:
+        if step_num == BOARD_SIZE**2:
             break
     return step_num, winner, game_num
