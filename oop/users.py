@@ -1,9 +1,10 @@
 from random import choice
 
+from board import Board
 from constants import COMP_NAMES
 
 
-class CompUser:
+class Comp:
     def __init__(self, symbol, name=None):
         self.name = self.get_name(name)
         self.symbol = symbol
@@ -11,20 +12,20 @@ class CompUser:
     def get_name(self, name):
         return name if name else choice(COMP_NAMES)
 
-    def get_step(self):
-        pass
+    def get_step(self, board: Board):
+        return choice(tuple(board.empty_steps()))
 
 
-class HumUser(CompUser):
+class User(Comp):
     def get_name(self, name):
-        return name if name else input(interface_string["enter_name"])
+        return name if name else input("Введите ваше имя")
 
-    def get_step(self):
-        result = []
-        steps = user_interface("enter_step").split(" ")
-        for itm in steps:
+    def get_step(self, board: Board):
+        step = []
+        input_step = input("Введите ваш ход").split(" ")
+        for itm in input_step:
             try:
-                result.append(int(itm))
+                step.append(int(itm))
             except ValueError:
                 break
-        return tuple(result)
+        return tuple(step)

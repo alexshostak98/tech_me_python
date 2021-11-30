@@ -37,22 +37,3 @@ class Board:
         diagonals = self.get_diagonals()
         result = any(map(self.chek_line, (*diagonals, *self.view, *zip(*self.view))))
         return result
-
-    def chek_1(self):
-        diagonals = self.get_diagonals()
-        result = map(self.chek_line, (
-            (self.view, "row"), (zip(*self.view), "column"), ([diagonals[0]], "diag"), ([diagonals[1]], "inv_diag")))
-        return result
-
-    def check_lines(lines, l_type) -> tuple:
-        for idx, item in enumerate(lines):
-            if (item.count("X") == 2 or item.count("O") == 2) and 0 in item:
-                idx2 = item.index(0)
-                steps = {
-                    "row": (idx, idx2),
-                    "column": (idx2, idx),
-                    "diag": (idx2, idx2),
-                    "inv_diag": (idx2, len(item) - idx2 - 1)
-                }
-                return steps[l_type]
-        return tuple()

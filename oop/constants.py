@@ -7,6 +7,8 @@ COMP_NAMES = (
     "DALEK",
 )
 
-MODES = ("CompUser", "HumUser")
+MODES = ("Comp", "User")
 
 BOARD_SIZE = 3
+
+RESTART_GAME = ("Y", "N")
