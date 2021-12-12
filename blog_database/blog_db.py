@@ -43,17 +43,25 @@ class BlogDB:
                 random.choice(tags).publications.append(elem)
                 tags_count -= 1
 
+    def add_to_session(self, session):
+        authors = self.add_authors(session)
+        publications = self.add_publications(session, authors)
+        tags = self.add_tags(session)
+        self.create_link(tags, publications)
+        session.commit()
+
+    @staticmethod
+    def make_queries(session):
+        query = Query(session)
+        tags = query.get_tags()
+        authors = query.get_authors()
+
     def create_session(self):
         session = self.maker()
         try:
-            authors = self.add_authors(session)
-            publications = self.add_publications(session, authors)
-            tags = self.add_tags(session)
-            self.create_link(tags, publications)
+            self.add_to_session(session)
+            self.make_queries(session)
             session.commit()
-            query = Query(session)
-            query.get_tags()
-            query.get_authors()
         except:
             session.rollback()
             raise

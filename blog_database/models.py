@@ -2,7 +2,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
 from sqlalchemy import Column, Integer, String, ForeignKey, Table, Date
-import time
+import datetime
 
 Base = declarative_base()
 
@@ -17,7 +17,7 @@ publication_tag = Table(
 class Publication(Base):
     __tablename__ = "publication"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    release_date = Column(Date, unique=False, default=time.asctime())
+    release_date = Column(Date, unique=False, default=datetime.date.today())
     title = Column(String(200), unique=False)
     content = Column(String())
     author_id = Column(Integer, ForeignKey("author.id"))
@@ -36,8 +36,8 @@ class Author(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     fullname = Column(String(64), unique=False)
     nickname = Column(String(32), unique=True)
-    b_date = Column(Date, unique=False, default=time.asctime())
-    reg_date = Column(Date, unique=False, default=time.asctime())
+    b_date = Column(Date, unique=False, default=datetime.date.today())
+    reg_date = Column(Date, unique=False, default=datetime.date.today())
 
 
 # class Blog(Base):
