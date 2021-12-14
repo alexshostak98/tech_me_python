@@ -2,18 +2,16 @@ import os
 from datetime import datetime
 
 from constants import LOGS_FILES_NAME, LOGS_DIR_NAME
-from templates import log_template, log_string
-from interface import user_interface
-
-log_string = {
-    "game_init": "{game_num}#{write_time}#{mode}#{user_1}#{user_2}\n",
-    "steps": "{game_num}#{write_time}#{user}#{step}#{step_num}\n",
-    "win": "{game_num}#{write_time}#Победитель-{user}#{step_num}\n",
-    "draw": "{game_num}#{write_time}#Ничья#{step_num}\n",
-}
 
 
 class Logger:
+
+    log_string = {
+        "game_init": "{game_num}#{write_time}#{mode}#{user_1}#{user_2}\n",
+        "steps": "{game_num}#{write_time}#{user}#{step}#{step_num}\n",
+        "win": "{game_num}#{write_time}#Победитель-{user}#{step_num}\n",
+        "draw": "{game_num}#{write_time}#Ничья#{step_num}\n",
+    }
 
     def __init__(self):
         self.inc = 1
@@ -28,7 +26,7 @@ class Logger:
         except FileNotFoundError:
             os.mkdir(LOGS_DIR_NAME)
         except IOError:
-            print(user_interface("log_error"))
+            print("log_error")
         self.write_to_file('game_num', str(self.game_num), 'w')
         return self.game_num
 
@@ -41,9 +39,9 @@ class Logger:
             with open(LOGS_FILES_NAME[name], access_type, encoding="UTF-8") as file:
                 file.write(message)
         except IOError:
-            print(user_interface("log_error"))
+            print("log_error")
 
     def get_log_message(self, string_name: str, **log_data):
         write_time = datetime.now()
-        log_message = log_string[string_name].format(game_num=self.game_num, write_time=write_time, **log_data)
+        log_message = self.log_string[string_name].format(game_num=self.game_num, write_time=write_time, **log_data)
         return log_message

@@ -10,11 +10,11 @@ import users
 class Lobby:
 
     # TODO: Реализовать логирование метода для записи в файл game_init
-    def __init__(self, game_num, mode=None, name=None):
+    def __init__(self, mode=None, name=None):
         self.mode = mode if mode else self.ask_mode()
         self.users = self.get_users(name)
         self.board = Board(BOARD_SIZE)
-        self.game_num = game_num
+        self.game_num = logger.get_game_num()
 
     # TODO: попытаться облегчить метод ask_mode
     def ask_mode(self) -> str:
@@ -91,7 +91,7 @@ class Lobby:
 if __name__ == '__main__':
     c_line = CommandLine()
     c_line.help()
-    print("Добро пожаловать в игру")
     logger = Logger()
-    lobby = Lobby(logger.get_game_num(), c_line.mode, c_line.name)
+    print("Добро пожаловать в игру")
+    lobby = Lobby(c_line.mode, c_line.name)
     lobby.run_game()
